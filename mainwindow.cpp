@@ -27,7 +27,7 @@ MainWindow::MainWindow()
 
 void MainWindow::setInit(){
     setFont(QFont("Verdana", 12));
-    // gray textEdit background
+    // Set the gray textEdit background
     QPalette p = textEdit->palette();
     p.setColor(QPalette::Base, Qt::lightGray);
     textEdit->setPalette(p);
@@ -75,7 +75,6 @@ bool MainWindow::save()
 
 bool MainWindow::saveAs()
 {
-
     QFileDialog dialog(this);
     dialog.setWindowModality(Qt::WindowModal);
     dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -88,19 +87,22 @@ void MainWindow::about()
 {
    QMessageBox::about(this, tr("About Application"),
             tr("The <b>Application</b> example demonstrates how to "
-               "write modern GUI applications using Qt, with a menu bar, "
+               "use Qt, with a menu bar, "
                "toolbars, and a status bar."));
 }
+
 //! zoom the textEdit
 void MainWindow::zoomIn()
 {
     MainWindow::textEdit->zoomIn(1);
 }
+
 //! Zoom out textEdit
 void MainWindow::zoomOut()
 {
     MainWindow::textEdit->zoomOut(1);
 }
+
 //! Change Font Dialog
 void MainWindow::changeFont()
 {
@@ -114,12 +116,12 @@ void MainWindow::changeFont()
     }
     //QFontDialog::getFont(0, textEdit))   <-  if we want set font directly to Widget
 }
+
 //! Change background color
 void MainWindow::changeColor()
 {
     const QColor defaultColor = Qt::lightGray;
-    // QColor color = QColorDialog::getColor();
-    //if (!color.isValid()) return;
+
     QColorDialog::setStandardColor(0, defaultColor);
     QColorDialog *dialog = new QColorDialog(this);
     dialog->show();
@@ -131,16 +133,6 @@ void MainWindow::changeColor()
         textEdit->setPalette(p);
     });
 }
-    //newColor = QColorDialog::getColor(defaultColor, textEdit, "Select background color", QColorDialog::NoButtons);
-    //if (!newColor.isValidColor()) {
-    //    QPalette p = textEdit->palette();
-    //    p.setColor(QPalette::Base, newColor);
-    //    textEdit->setPalette(p);
-    //} else {
-    //    QPalette p = textEdit->palette();
-     //   p.setColor(QPalette::Base, defaultColor);
-    //    textEdit->setPalette(p);
-    //}
 
 //! for preferences menu
 void MainWindow::preferences()
@@ -156,7 +148,6 @@ void MainWindow::documentWasModified()
 
 void MainWindow::createActions()
 {
-
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     QToolBar *fileToolBar = addToolBar(tr("File"));
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
@@ -166,7 +157,7 @@ void MainWindow::createActions()
     connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
     fileMenu->addAction(newAct);
     fileToolBar->addAction(newAct);
-
+// open toolbar icon and action
     const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));
     QAction *openAct = new QAction(openIcon, tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
@@ -175,7 +166,7 @@ void MainWindow::createActions()
     fileMenu->addAction(openAct);
     fileToolBar->addAction(openAct);
 
-
+// save toolbar icon and action
     const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/images/save.png"));
     QAction *saveAct = new QAction(saveIcon, tr("&Save"), this);
     saveAct->setShortcuts(QKeySequence::Save);
@@ -184,6 +175,7 @@ void MainWindow::createActions()
     fileMenu->addAction(saveAct);
     fileToolBar->addAction(saveAct);
 
+// save as toolbar icon and action
     const QIcon saveAsIcon = QIcon::fromTheme("document-save-as", QIcon(":/images/saveas.png"));
     QAction *saveAsAct = fileMenu->addAction(saveAsIcon, tr("Save &As..."), this, &MainWindow::saveAs);
     saveAsAct->setShortcuts(QKeySequence::SaveAs);
@@ -192,16 +184,17 @@ void MainWindow::createActions()
 
     fileMenu->addSeparator();
 
+// exit toolbar icon and action
     const QIcon exitIcon = QIcon::fromTheme("application-exit");
     QAction *exitAct = fileMenu->addAction(exitIcon, tr("E&xit"), this, &QWidget::close);
     exitAct->setShortcuts(QKeySequence::Quit);
 
     exitAct->setStatusTip(tr("Exit the application"));
-
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
     QToolBar *editToolBar = addToolBar(tr("Edit"));
 
 #ifndef QT_NO_CLIPBOARD
+// edit-cut toolbar icon and action
     const QIcon cutIcon = QIcon::fromTheme("edit-cut", QIcon(":/images/cut.png"));
     QAction *cutAct = new QAction(cutIcon, tr("Cu&t"), this);
 
@@ -212,6 +205,7 @@ void MainWindow::createActions()
     editMenu->addAction(cutAct);
     editToolBar->addAction(cutAct);
 
+// edit-copy toolbar icon and action
     const QIcon copyIcon = QIcon::fromTheme("edit-copy", QIcon(":/images/copy.png"));
     QAction *copyAct = new QAction(copyIcon, tr("&Copy"), this);
     copyAct->setShortcuts(QKeySequence::Copy);
@@ -221,6 +215,7 @@ void MainWindow::createActions()
     editMenu->addAction(copyAct);
     editToolBar->addAction(copyAct);
 
+// paste toolbar icon and action
     const QIcon pasteIcon = QIcon::fromTheme("edit-paste", QIcon(":/images/paste.png"));
     QAction *pasteAct = new QAction(pasteIcon, tr("&Paste"), this);
     pasteAct->setShortcuts(QKeySequence::Paste);
@@ -279,9 +274,9 @@ void MainWindow::createActions()
     // help menu tool bar
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     QAction *aboutAct = helpMenu->addAction(tr("&About"), this, &MainWindow::about);
-    aboutAct->setStatusTip(tr("Show the application's About box"));
+    aboutAct->setStatusTip(tr("Show the application About box"));
 
-
+    // About
     QAction *aboutQtAct = helpMenu->addAction(tr("About &Qt"), qApp, &QApplication::aboutQt);
     aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 
